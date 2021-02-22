@@ -6,8 +6,11 @@ import getWeb3 from "../getWeb3";
 export default class Manifactor extends Component {
     constructor(props) {
         super(props);
-        this.state = { name: '', id: '', serial: '', productiondate: 0, expiredate: 0, manfiactorid: 0, error: '', type: '', web3: null, contract: null, site: "", accounts: null, networkId: null, errorLogin: false, medicen: [], User: null }
+        this.state = { name: '', id: '', serial: '', productiondate: 0, expiredate: 0, manfiactorid: 0, error: '', type: '', web3: null, contract: null, site: "", accounts: null, networkId: null, errorLogin: false, orders: [], medicen: [], User: null }
         this.AddMedicien = this.AddMedicien.bind(this);
+        this.getMediciens = this.getMediciens.bind(this);
+        this.confirmOrder = this.confirmOrder.bind(this);
+        this.getOrders = this.getOrders.bind(this);
         this.setState({
             User: localStorage.getItem("M")
         })
@@ -44,6 +47,41 @@ export default class Manifactor extends Component {
             this.setState({
                 errorLogin: false,
                 error: "Error When Adding Medicien"
+            })
+        }
+    }
+    async confirmOrder(id,medid) {
+        let deployedNetwork2 = PharmacyContract.networks[this.state.networkId];
+        let instance2 = new this.state.web3.eth.Contract(
+            PharmacyContract.abi,
+            deployedNetwork2 && deployedNetwork2.address,
+        );
+        try {
+            var x = await instance2.methods.confirmOrder(id).call({ from: this.state.accounts[0], gas: 3000000 });
+            var xc = await instance2.methods.deleiverMedicien(medid).call({ from: this.state.accounts[0], gas: 3000000 });
+        } catch (error) {
+            this.setState({
+                errorLogin: false,
+                error: "Error When Confirm Order"
+            })
+        }
+    }
+    async getOrders() {
+        let deployedNetwork2 = PharmacyContract.networks[this.state.networkId];
+        let instance2 = new this.state.web3.eth.Contract(
+            PharmacyContract.abi,
+            deployedNetwork2 && deployedNetwork2.address,
+        );
+        try {
+            var x = await instance2.methods.getOrderbymanfi(this.state.User["id"]).send({ from: this.state.accounts[0], gas: 3000000 });
+            var data = await instance2.methods.returnSearchedOrderData().call({ from: this.state.accounts[0], gas: 3000000 });
+            this.setState({
+                orders: data
+            })
+        } catch (error) {
+            this.setState({
+                errorLogin: false,
+                error: "Error When Get Orders"
             })
         }
     }
@@ -94,6 +132,32 @@ export default class Manifactor extends Component {
                 </table>
             </div>
         }
+        let Orders_div;
+        if (this.state.orders.length != 0) {
+            Orders_div = <div className="containeer">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Medicien Id</th>
+                            <th scope="col">Parmacy Id</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.orders.map(i => {
+                            return <tr>
+                                <th scope="row">{i["orderid"]}</th>
+                                <td>{i["medicienid"]}</td>
+                                <td>{i["parmacyid"]}</td>
+                                <td>{i["confirmed"] ? <span></span> : <button className="btn btn-primary" onClick={this.confirmOrder(i["orderid"],i["medicienid"])}>Confirm</button>}</td>
+                            </tr>
+                        })}
+
+                    </tbody>
+                </table>
+            </div>
+        }
         return (
 
             <div>
@@ -101,8 +165,7 @@ export default class Manifactor extends Component {
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Add Medicien</button>
                         <button class="nav-link" id="nav-contact-tab" onClick={this.getMediciens} data-bs-toggle="tab" data-bs-target="#nav-med" type="button" role="tab" aria-controls="nav-med" aria-selected="false">All Mediciens</button>
-                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Confirm Order</button>
-                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">All Orders</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">All Order</button>
                     </div>
                 </nav>
                 {div}
@@ -137,10 +200,7 @@ export default class Manifactor extends Component {
                         {mediciens_div}
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-
-                    </div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
+                        {Orders_div}
                     </div>
                 </div>
             </div>

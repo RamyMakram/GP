@@ -23,6 +23,7 @@ contract Pharmacy {
         uint orderid;
         uint medicienid;
         bool confirmed;
+        bool recieved;
         uint manfiactorid;
         uint parmacyid;
     }
@@ -73,7 +74,8 @@ contract Pharmacy {
                 medicienid:medicienid,
                 manfiactorid:manfiactorid,
                 parmacyid:parmacyid,
-                confirmed:false
+                confirmed:false,
+                recieved:false
             }));
             _orderid++;
     }
@@ -82,6 +84,14 @@ contract Pharmacy {
         for (uint i = 0; i < orders.length; i++) {
             if(orders[i].orderid==orderid){
                 orders[i].confirmed=true;
+            }
+        }
+    }
+   
+    function recieveOrder(uint orderid)public{
+        for (uint i = 0; i < orders.length; i++) {
+            if(orders[i].orderid==orderid){
+                orders[i].recieved=true;
             }
         }
     }

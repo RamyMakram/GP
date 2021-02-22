@@ -42,10 +42,11 @@ export default class Login extends Component {
                     })
                 }
                 else {
+                    localStorage.setItem('P', x);
                     this.setState({
                         errorLogin: false
                     })
-                    this.props.history.push('/sign-up');
+                    this.props.history.push('/pharmacy');
                 }
                 break;
             case "M":
@@ -68,7 +69,7 @@ export default class Login extends Component {
                     this.setState({
                         errorLogin: false
                     })
-                    this.props.history.push('/sign-up');
+                    this.props.history.push('/manifactor');
                 }
                 break;
 
