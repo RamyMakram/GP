@@ -8,7 +8,6 @@ export default class Login extends Component {
         super(props);
         this.state = { username: '', pass: '', type: '', web3: null, contract: null, site: "", accounts: null, networkId: null, errorLogin: false }
         this.onSiteChanged = this.onSiteChanged.bind(this);
-        this.login = this.login.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount = async () => {
@@ -100,45 +99,47 @@ export default class Login extends Component {
           </div>
         }
         return (
-            <form onSubmit={this.handleSubmit} >
+            <div className="viwe">
+                <form onSubmit={this.handleSubmit} >
 
-                <h3>Log in</h3>
-                {div}
-                <div className="form-group">
-                    <label>User Name</label>
-                    <input type="text" className="form-control" placeholder="Enter email" value={this.state.username} onChange={e => this.setState({ username: e.target.value })} />
-                </div>
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" value={this.state.pass} onChange={e => this.setState({ pass: e.target.value })} />
-                </div>
-                <div className="form-group">
-                    <input className="input-radio" id="1s" type="radio" name="site_name"
-                        value="P"
-                        onChange={this.onSiteChanged} defaultChecked="checked" />
-                    <label htmlFor="1s">Pharmacy</label>
-                    <input className="input-radio" id="2s" type="radio" name="site_name"
-                        value="M"
-                        onChange={this.onSiteChanged} />
-                    <label htmlFor="2s">Manifactor</label>
-                    <input className="input-radio" id="3s" type="radio" name="site_name"
-                        value="A"
-                        onChange={this.onSiteChanged} />
-                    <label htmlFor="3s">Admin</label>
-                </div>
-                <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                    <h3>Log in</h3>
+                    {div}
+                    <div className="form-group">
+                        <label>User Name</label>
+                        <input type="text" className="form-control" placeholder="Enter email" value={this.state.username} onChange={e => this.setState({ username: e.target.value })} />
                     </div>
-                </div>
 
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
-                {/* <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
-                </p> */}
-            </form>
-        );
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input type="password" className="form-control" placeholder="Enter password" value={this.state.pass} onChange={e => this.setState({ pass: e.target.value })} />
+                    </div>
+                    <div className="form-group">
+                        <input className="input-radio" id="1s" type="radio" name="site_name"
+                            value="P"
+                            onChange={this.onSiteChanged} defaultChecked="checked" />
+                        <label htmlFor="1s">Pharmacy</label>
+                        <input className="input-radio" id="2s" type="radio" name="site_name"
+                            value="M"
+                            onChange={this.onSiteChanged} />
+                        <label htmlFor="2s">Manifactor</label>
+                        <input className="input-radio" id="3s" type="radio" name="site_name"
+                            value="A"
+                            onChange={this.onSiteChanged} />
+                        <label htmlFor="3s">Admin</label>
+                    </div>
+                    <div className="form-group">
+                        <div className="custom-control custom-checkbox">
+                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                            <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
+                    {/* <p className="forgot-password text-right">
+    Forgot <a href="#">password?</a>
+</p> */}
+                </form>
+
+            </div>);
     }
 }

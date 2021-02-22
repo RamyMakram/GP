@@ -231,7 +231,7 @@ export default class pharmacy extends Component {
             </div>
         }
         return (
-            <div>
+            <div className="viwe">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <button class="nav-link" id="nav-contact-tab" onClick={this.getAllMediciens} data-bs-toggle="tab" data-bs-target="#nav-med" type="button" role="tab" aria-controls="nav-med" aria-selected="false">All Aviable Mediciens</button>
@@ -239,7 +239,6 @@ export default class pharmacy extends Component {
                         <button class="nav-link" id="nav-profile-tab" onClick={this.MyMedicen} data-bs-toggle="tab" data-bs-target="#nav-mediciens" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">My Medicenes</button>
                     </div>
                 </nav>
-                {div}
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-med" role="tabpanel" aria-labelledby="nav-med-tab">
                         {mediciens_div}
