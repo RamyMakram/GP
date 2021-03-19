@@ -5645,7 +5645,7 @@
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-02-21T19:15:04.300Z",
+  "updatedAt": "2021-02-23T14:14:45.454Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implements voting process along with vote delegation",

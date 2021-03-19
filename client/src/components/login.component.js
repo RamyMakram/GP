@@ -6,7 +6,7 @@ import getWeb3 from "../getWeb3";
 export default class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = { username: '', pass: '', type: '', web3: null, contract: null, site: "", accounts: null, networkId: null, errorLogin: false }
+        this.state = { username: '', pass: '', type: '', web3: null, contract: null, site: "P", accounts: null, networkId: null, errorLogin: false }
         this.onSiteChanged = this.onSiteChanged.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -22,8 +22,8 @@ export default class Login extends Component {
         })
     }
     async handleSubmit(event) {
-
         event.preventDefault();
+        console.log(this.state.site);
         switch (this.state.site) {
             case "P":
                 let deployedNetwork2 = PharmacyContract.networks[this.state.networkId];
@@ -73,6 +73,8 @@ export default class Login extends Component {
                 break;
 
             case "A":
+                console.log("admin")
+                this.props.history.push('/admin');
                 if (this.state.usernam == "admin" && this.state.pass == "admin") {
 
                 } else {
@@ -87,6 +89,7 @@ export default class Login extends Component {
 
     }
     onSiteChanged(e) {
+        console.log(e)
         this.setState({
             site: e.currentTarget.value
         });

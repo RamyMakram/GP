@@ -15,6 +15,17 @@ export default class Manifactor extends Component {
             User: localStorage.getItem("M")
         })
     }
+    componentDidMount = async () => {
+        const web3 = await getWeb3();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+
+        this.setState({
+            accounts: accounts,
+            web3: web3,
+            networkId: networkId
+        })
+    }
     async AddMedicien(eve) {
         eve.preventDefault();
         let deployedNetwork2 = MedicienContract.networks[this.state.networkId];
@@ -23,7 +34,9 @@ export default class Manifactor extends Component {
             deployedNetwork2 && deployedNetwork2.address,
         );
         try {
-            var x = await instance2.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, this.state.manfiactorid).call({ from: this.state.accounts[0], gas: 3000000 });
+            console.log(instance2);
+            var x = await instance2.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, this.state.manfiactorid).send({ from: this.state.accounts[0], gas: 3000000 });
+            console.log(x)
         } catch (error) {
             this.setState({
                 errorLogin: false,
@@ -50,7 +63,7 @@ export default class Manifactor extends Component {
             })
         }
     }
-    async confirmOrder(id,medid) {
+    async confirmOrder(id, medid) {
         let deployedNetwork2 = PharmacyContract.networks[this.state.networkId];
         let instance2 = new this.state.web3.eth.Contract(
             PharmacyContract.abi,
@@ -85,17 +98,7 @@ export default class Manifactor extends Component {
             })
         }
     }
-    componentDidMount = async () => {
-        const web3 = await getWeb3();
-        const accounts = await web3.eth.getAccounts();
-        const networkId = await web3.eth.net.getId();
 
-        this.setState({
-            accounts: accounts,
-            web3: web3,
-            networkId: networkId
-        })
-    }
     render() {
         let div;
         if (this.state.errorLogin) {
@@ -107,7 +110,7 @@ export default class Manifactor extends Component {
         let mediciens_div;
         if (this.state.medicen.length != 0) {
             mediciens_div = <div className="containeer">
-                <table class="table table-bordered">
+                <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -135,7 +138,7 @@ export default class Manifactor extends Component {
         let Orders_div;
         if (this.state.orders.length != 0) {
             Orders_div = <div className="containeer">
-                <table class="table table-bordered">
+                <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -150,7 +153,7 @@ export default class Manifactor extends Component {
                                 <th scope="row">{i["orderid"]}</th>
                                 <td>{i["medicienid"]}</td>
                                 <td>{i["parmacyid"]}</td>
-                                <td>{i["confirmed"] ? <span></span> : <button className="btn btn-primary" onClick={this.confirmOrder(i["orderid"],i["medicienid"])}>Confirm</button>}</td>
+                                <td>{i["confirmed"] ? <span></span> : <button className="btn btn-primary" onClick={this.confirmOrder(i["orderid"], i["medicienid"])}>Confirm</button>}</td>
                             </tr>
                         })}
 
@@ -160,17 +163,17 @@ export default class Manifactor extends Component {
         }
         return (
 
-            <div style={{width: '60vw'}}>
+            <div style={{ width: '60vw' }}>
                 <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Add Medicien</button>
-                        <button class="nav-link" id="nav-contact-tab" onClick={this.getMediciens} data-bs-toggle="tab" data-bs-target="#nav-med" type="button" role="tab" aria-controls="nav-med" aria-selected="false">All Mediciens</button>
-                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">All Order</button>
+                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Add Medicien</button>
+                        <button className="nav-link" id="nav-contact-tab" onClick={this.getMediciens} data-bs-toggle="tab" data-bs-target="#nav-med" type="button" role="tab" aria-controls="nav-med" aria-selected="false">All Mediciens</button>
+                        <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">All Order</button>
                     </div>
                 </nav>
                 {div}
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div className="tab-content" id="nav-tabContent">
+                    <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <form onSubmit={this.AddMedicien}>
                             <h3>Add Medicien</h3>
                             <div className="form-group">
@@ -196,10 +199,10 @@ export default class Manifactor extends Component {
                             <button type="submit" className="btn btn-dark btn-lg btn-block">Save</button>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="nav-med" role="tabpanel" aria-labelledby="nav-med-tab">
+                    <div className="tab-pane fade" id="nav-med" role="tabpanel" aria-labelledby="nav-med-tab">
                         {mediciens_div}
                     </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         {Orders_div}
                     </div>
                 </div>

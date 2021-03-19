@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@truffle/hdwallet-provider": "^1.2.3",
     "react-navigation": "^4.4.4"
   }
 }

@@ -16,9 +16,22 @@ export default class pharmacy extends Component {
         this.setState({
             User: localStorage.getItem("P")
         })
-        this.getAllMediciens();
+    }
+    componentDidMount = async () => {
+        const web3 = await getWeb3();
+        const accounts = await web3.eth.getAccounts();
+        const networkId = await web3.eth.net.getId();
+
+        this.setState({
+            accounts: accounts,
+            web3: web3,
+            networkId: networkId
+        })
+      await this.getAllMediciens();
+
     }
     async getAllMediciens() {
+        console.log("medicien")
         let deployedNetwork2 = MedicienContract.networks[this.state.networkId];
         let instance2 = new this.state.web3.eth.Contract(
             MedicienContract.abi,
@@ -26,7 +39,9 @@ export default class pharmacy extends Component {
         );
         try {
             var x = await instance2.methods.get_nonorderd_nonconfirmed_medicien().send({ from: this.state.accounts[0], gas: 3000000 });
+            console.log(x)
             var data = await instance2.methods.returnSearchedData().call({ from: this.state.accounts[0], gas: 3000000 });
+            console.log(data)
             this.setState({
                 medicen: data
             })
@@ -119,22 +134,12 @@ export default class pharmacy extends Component {
             })
         }
     }
-    componentDidMount = async () => {
-        const web3 = await getWeb3();
-        const accounts = await web3.eth.getAccounts();
-        const networkId = await web3.eth.net.getId();
 
-        this.setState({
-            accounts: accounts,
-            web3: web3,
-            networkId: networkId
-        })
-    }
     render() {
         let mediciens_div;
         if (this.state.medicen.length != 0) {
             mediciens_div = <div className="containeer">
-                <table class="table table-bordered">
+                <table className="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -155,7 +160,7 @@ export default class pharmacy extends Component {
                                 <td>{i["serial"]}</td>
                                 <td>{i["productiondate"]}</td>
                                 <td>{i["expiredate"]}</td>
-                                <td><button className="btn btn-primary" onClick={this.addOrder(i["id"], i["manfiactorid"])}>Add Order</button></td>
+                                <td><button className="btn btn-primary" onClick={this.addOrder}>Add Order</button></td>
                             </tr>
                         })}
 
@@ -218,7 +223,7 @@ export default class pharmacy extends Component {
                                         i["confirmed"] && i["recieved"] ?
                                             <span></span> :
                                             ((i["confirmed"] && !i["recieved"]) ?
-                                                <button className="btn btn-primary" onClick={this.recieveOrder(i["orderid"], i["medicienid"])}>Recieve Order</button>
+                                                <button className="btn btn-primary" onClick={this.recieveOrder()}>Recieve Order</button>
                                                 : <span></span>)
 
                                     }
