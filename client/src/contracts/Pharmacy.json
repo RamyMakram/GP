@@ -17047,6 +17047,12 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0x09d51cab13320A0E2cAA228fb36755A33b3b78ec",
+      "transactionHash": "0xa77d3cd09b047015066be2c0778f22abaf4099686d39bff43b9dfcb3a6b6b875"
+    },
     "5777": {
       "events": {},
       "links": {},
@@ -17055,7 +17061,7 @@
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-02-23T14:14:45.379Z",
+  "updatedAt": "2021-03-19T14:45:02.758Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implements voting process along with vote delegation",

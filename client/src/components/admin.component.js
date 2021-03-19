@@ -13,6 +13,7 @@ export default class admin extends Component {
     }
     componentDidMount = async () => {
         const web3 = await getWeb3();
+        console.log(web3)
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
 
@@ -43,7 +44,8 @@ export default class admin extends Component {
     }
     async AddManficator(event) {
         event.preventDefault();
-
+console.log(event)
+debugger
         let deployedNetwork2 = MainifactorContract.networks[this.state.networkId];
         let instance2 = new this.state.web3.eth.Contract(
             MainifactorContract.abi,

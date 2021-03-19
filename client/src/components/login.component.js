@@ -102,7 +102,7 @@ export default class Login extends Component {
           </div>
         }
         return (
-            <div className="viwe">
+            <div className="viwe login">
                 <form onSubmit={this.handleSubmit} >
 
                     <h3>Log in</h3>
