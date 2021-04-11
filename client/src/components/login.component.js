@@ -23,7 +23,6 @@ export default class Login extends Component {
     }
     async handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state.site);
         switch (this.state.site) {
             case "P":
                 let deployedNetwork2 = PharmacyContract.networks[this.state.networkId];
@@ -102,6 +101,7 @@ export default class Login extends Component {
           </div>
         }
         return (
+            
             <div className="viwe login">
                 <form onSubmit={this.handleSubmit} >
 

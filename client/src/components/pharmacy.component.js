@@ -18,6 +18,7 @@ export default class pharmacy extends Component {
         })
     }
     componentDidMount = async () => {
+        debugger
         const web3 = await getWeb3();
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();

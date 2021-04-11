@@ -1,14 +1,17 @@
 import Web3 from "web3";
+import Shared_Vars from './components/Helper/shared'
 var HDWalletProvider = require("@truffle/hdwallet-provider");
 var mnemonic = "vital soul dentist check kite rebel used claim over monster excuse option";
+
 const getWeb3 = () =>
   new Promise((resolve, reject) => {
     // Wait for loading completion to avoid race conditions with web3 injection timing.
     window.addEventListener("load", async () => {
-      const provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/3cde25891ff9434fb7f1ca4a8322d705",5);
+      const provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/3cde25891ff9434fb7f1ca4a8322d705", 5);
       const web3 = new Web3(provider);
       console.log("No web3 instance injected, using Local web3.");
       resolve(web3);
+      Shared_Vars.web3 = web3;
       // const provider = new Web3.providers.HttpProvider(
       //   "http://127.0.0.1:8545"
       // );

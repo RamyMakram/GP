@@ -1145,3 +1145,25 @@ button {
     min-height: calc(100vh - 86px);
     width: 100%;
 }
+.loadinger{
+    position: fixed;
+    width: 100vw;
+    height: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    z-index: 999999;
+  }
+  .loadinger img{
+      width: 50%;
+  }
+  .loadinger .col-12{
+    text-align: center;
+  }
+  .loadinger .col-12 p{
+    color: #00ad5f;
+    font-weight: bolder;
+    font-size: 28px;
+  }
