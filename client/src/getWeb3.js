@@ -9,9 +9,11 @@ const getWeb3 = () =>
     window.addEventListener("load", async () => {
       const provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/d8b7fcc1456a415e961fcd49c8b6e945", 5);
       const web3 = new Web3(provider);
-      console.log("No web3 instance injected, using Local web3.");
       resolve(web3);
       Shared_Vars.web3 = web3;
+      var accounts = await web3.eth.getAccounts();
+      Shared_Vars.Address = accounts[0]
+      console.log(Shared_Vars.Address)
       // const provider = new Web3.providers.HttpProvider(
       //   "http://127.0.0.1:8545"
       // );

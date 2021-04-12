@@ -20,7 +20,8 @@ export default class pharmacy extends Component {
         this.addOrder = this.addOrder.bind(this);
         this.MyMedicen = this.MyMedicen.bind(this);
         let interval = setInterval(async () => {
-            if (Shared.web3 != null) {
+            console.log(Shared.Address)
+            if (Shared.web3 != null && Shared.Address != null) {
                 clearInterval(interval);
                 await this.loading();
             }
@@ -91,8 +92,8 @@ export default class pharmacy extends Component {
         );
         try {
             console.log(this.state.User)
-            await contract.methods.get_nonorderd_nonconfirmed_medicien().send({ from: this.state.accounts[0], gas: 3000000 });
-            var data = await contract.methods.returnSearchedData().call({ from: this.state.accounts[0], gas: 3000000 });
+            await contract.methods.get_nonorderd_nonconfirmed_medicien().send({ from: Shared.Address, gas: 3000000 });
+            var data = await contract.methods.returnSearchedData().call({ from: Shared.Address, gas: 3000000 });
             this.setState({
                 medicen: data,
                 loading: false
@@ -102,6 +103,7 @@ export default class pharmacy extends Component {
                 errorLogin: false,
                 error: "Error When Adding Medicien"
             })
+            console.log(error)
         }
     }
     async getPharmaOrders() {
@@ -117,8 +119,8 @@ export default class pharmacy extends Component {
         );
         console.log(contract)
         try {
-            await contract.methods.getOrderbypharma(this.state.User).send({ from: this.state.accounts[0], gas: 3000000 });
-            var data = await contract.methods.returnSearchedOrderData().call({ from: this.state.accounts[0], gas: 3000000 });
+            await contract.methods.getOrderbypharma(this.state.User).send({ from: Shared.Address, gas: 3000000 });
+            var data = await contract.methods.returnSearchedOrderData().call({ from: Shared.Address, gas: 3000000 });
             console.log(data)
 
             this.setState({
@@ -133,21 +135,21 @@ export default class pharmacy extends Component {
         }
     }
     async recieveOrder(orderid, medid) {
-        let deployedNetwork12 = MedicienContract.networks[this.state.networkId];
-        let medi_contract = new this.state.web3.eth.Contract(
+        let MENetwork = MedicienContract.networks[this.state.networkId];
+        let MEcontract = new this.state.web3.eth.Contract(
             MedicienContract.abi,
-            deployedNetwork12 && deployedNetwork12.address,
+            MENetwork && MENetwork.address,
         );
-        var medicen = await medi_contract.methods.getmedicien(medid).call({ from: this.state.accounts[0], gas: 3000000 });
-        let deployedNetwork2 = PharmacyContract.networks[this.state.networkId];
-        let pharma_contract = new this.state.web3.eth.Contract(
+        var medicenData = await MEcontract.methods.getmedicien(medid).call({ from: Shared.Address, gas: 3000000 });
+        let PHNetwork = PharmacyContract.networks[this.state.networkId];
+        let PHcontract = new this.state.web3.eth.Contract(
             PharmacyContract.abi,
-            deployedNetwork2 && deployedNetwork2.address,
+            PHNetwork && PHNetwork.address,
         );
         try {
-            var x = await pharma_contract.methods.recieveOrder(orderid).send({ from: this.state.accounts[0], gas: 3000000 });
-            var xx = await medi_contract.methods.deleiverMedicien(medid).send({ from: this.state.accounts[0], gas: 3000000 });
-            var ddd = await pharma_contract.methods.addmedicen(medicen["name"], medicen["serial"], medicen["productiondate"], medicen["expiredate"], medicen["manfiactorid"], this.state.User["id"]).send({ from: this.state.accounts[0], gas: 3000000 });
+            await PHcontract.methods.recieveOrder(orderid).send({ from: Shared.Address, gas: 3000000 });
+            await MEcontract.methods.deleiverMedicien(medid).send({ from: Shared.Address, gas: 3000000 });
+            await PHcontract.methods.addmedicen(medicenData["name"], medicenData["serial"], medicenData["productiondate"], medicenData["expiredate"], medicenData["manfiactorid"], this.state.User["id"]).send({ from: Shared.Address, gas: 3000000 });
         } catch (error) {
             this.setState({
                 errorLogin: false,
@@ -173,8 +175,8 @@ export default class pharmacy extends Component {
         for (let x = 0; x < length; x++) {
             const i = this.state[x];
             try {
-                await Pharmacontract.methods.addOrder(i["id"], i["manfiactorid"], this.state.User).send({ from: this.state.accounts[0], gas: 3000000 });
-                await Mediciencontract.methods.OrderMedicien(i["manfiactorid"]).send({ from: this.state.accounts[0], gas: 3000000 });
+                await Pharmacontract.methods.addOrder(i["id"], i["manfiactorid"], this.state.User).send({ from: Shared.Address, gas: 3000000 });
+                await Mediciencontract.methods.OrderMedicien(i["manfiactorid"]).send({ from: Shared.Address, gas: 3000000 });
             } catch (error) {
                 this.setState({
                     errorLogin: false,
@@ -198,8 +200,8 @@ export default class pharmacy extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.getmedicienbyPharma(this.state.User).send({ from: this.state.accounts[0], gas: 3000000 });
-            var data = await contract.methods.returnSearchedMedicienData().call({ from: this.state.accounts[0], gas: 3000000 });
+            await contract.methods.getmedicienbyPharma(this.state.User).send({ from: Shared.Address, gas: 3000000 });
+            var data = await contract.methods.returnSearchedMedicienData().call({ from: Shared.Address, gas: 3000000 });
             console.log(data);
             this.setState({
                 Mymedicen: data,
@@ -305,7 +307,7 @@ export default class pharmacy extends Component {
                                                         i["confirmed"] && i["recieved"] ?
                                                             <span></span> :
                                                             ((i["confirmed"] && !i["recieved"]) ?
-                                                                <button className="btn btn-primary" onClick={this.recieveOrder()}>Recieve Order</button>
+                                                                <button className="btn btn-primary" onClick={this.recieveOrder}>Recieve Order</button>
                                                                 : <span></span>)
 
                                                     }

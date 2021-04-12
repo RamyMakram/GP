@@ -12,7 +12,7 @@ export default class admin extends Component {
         this.AddManficator = this.AddManficator.bind(this);
         // this.getPhamacy = this.getPhamacy.bind(this);
         let interval = setInterval(async () => {
-            if (Shared.web3 != null) {
+            if (Shared.web3 != null&&Shared.Address!=null) {
                 clearInterval(interval);
                 await this.loading();
             }
@@ -42,7 +42,7 @@ export default class admin extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.regiter(this.state.pusername, this.state.ppass, this.state.pname).send({ from: this.state.accounts[0], gas: 3000000 });
+            await contract.methods.regiter(this.state.pusername, this.state.ppass, this.state.pname).send({ from: Shared.Address, gas: 3000000 });
             this.setState({
                 loading: false,
                 message: 'Added Successfuly',
@@ -55,7 +55,7 @@ export default class admin extends Component {
                     message: ""
                 })
             }, 1000);
-            // var xc = await instance2.methods.deleiverMedicien(medid).call({ from: this.state.accounts[0], gas: 3000000 });
+            // var xc = await instance2.methods.deleiverMedicien(medid).call({ from: Shared.Address, gas: 3000000 });
         } catch (error) {
             this.setState({
                 error: "Error When Confirm Order"
@@ -78,7 +78,7 @@ export default class admin extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.regiter(this.state.musername, this.state.mpass, this.state.mname).send({ from: this.state.accounts[0], gas: 3000000 });
+            await contract.methods.regiter(this.state.musername, this.state.mpass, this.state.mname).send({ from: Shared.Address, gas: 3000000 });
             this.setState({
                 loading: false,
                 message: 'Added Successfuly',
@@ -91,7 +91,7 @@ export default class admin extends Component {
                     message: ""
                 })
             }, 1000);
-            // var xc = await instance2.methods.deleiverMedicien(medid).call({ from: this.state.accounts[0], gas: 3000000 });
+            // var xc = await instance2.methods.deleiverMedicien(medid).call({ from: Shared.Address, gas: 3000000 });
         } catch (error) {
             this.setState({
                 error: "Error When Confirm Order"
@@ -110,8 +110,8 @@ export default class admin extends Component {
     //         Network && Network.address,
     //     );
     //     try {
-    //         await contract.methods.get_nonorderd_nonconfirmed_medicien().send({ from: this.state.accounts[0], gas: 3000000 });
-    //         var data = await contract.methods.returnSearchedData().call({ from: this.state.accounts[0], gas: 3000000 });
+    //         await contract.methods.get_nonorderd_nonconfirmed_medicien().send({ from: Shared.Address, gas: 3000000 });
+    //         var data = await contract.methods.returnSearchedData().call({ from: Shared.Address, gas: 3000000 });
     //         this.setState({
     //             medicen: data
     //         })
@@ -124,7 +124,7 @@ export default class admin extends Component {
     // }
     render() {
         let data = (
-            <div style={{width:'94%'}}>
+            <div className="viwe">
                 { this.state.message != "" ? (
                     <div className="alert alert-success">
                         {this.state.message}
@@ -145,42 +145,42 @@ export default class admin extends Component {
                 </nav>
                 {/* {div} */}
                 <div className="tab-content" id="nav-tabContent">
-                    <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <form onSubmit={this.AddPharmacy}>
+                    <div className="tab-pane fade show active" id="nav-home" style={{textAlign:"center"}} role="tabpanel" aria-labelledby="nav-home-tab">
+                        <form onSubmit={this.AddPharmacy} style={{width:'50vw', margin:'auto'}}>
                             <h3 style={{ paddingTop: 25 + 'px' }}>Add Pharmacy</h3>
                             <div className="form-group">
-                                <label>User Name</label>
+                                <label className="formDesc">User Name</label>
                                 <input type="text" value={this.state.pusername} onChange={e => this.setState({ pusername: e.target.value })} className="form-control" placeholder="Enter Pharmacy User Name" />
                             </div>
 
                             <div className="form-group">
-                                <label>Password</label>
+                                <label className="formDesc">Password</label>
                                 <input type="text" value={this.state.ppass} onChange={e => this.setState({ ppass: e.target.value })} className="form-control" placeholder="Enter Pharmacy Password" />
                             </div>
 
                             <div className="form-group">
-                                <label>Name</label>
+                                <label className="formDesc">Name</label>
                                 <input type="text" value={this.state.pname} onChange={e => this.setState({ pname: e.target.value })} className="form-control" placeholder="Enter Pharmacy Name" />
                             </div>
 
                             <button type="submit" className="btn btn-dark btn-lg btn-block">Save</button>
                         </form>
                     </div>
-                    <div className="tab-pane fade" id="nav-med" role="tabpanel" aria-labelledby="nav-med-tab">
-                        <form onSubmit={this.AddManficator}>
+                    <div className="tab-pane fade"style={{textAlign:"center"}}  id="nav-med" role="tabpanel" aria-labelledby="nav-med-tab">
+                        <form onSubmit={this.AddManficator}  style={{width:'50vw', margin:'auto'}}>
                             <h3 style={{ paddingTop: 25 + 'px' }}>Add Manficator</h3>
                             <div className="form-group">
-                                <label>User Name</label>
+                                <label className="formDesc">User Name</label>
                                 <input type="text" value={this.state.musername} onChange={e => this.setState({ musername: e.target.value })} className="form-control" placeholder="Enter Manifactor User Name" />
                             </div>
 
                             <div className="form-group">
-                                <label>Password</label>
+                                <label className="formDesc">Password</label>
                                 <input type="text" value={this.state.mpass} onChange={e => this.setState({ mpass: e.target.value })} className="form-control" placeholder="Enter Manifactor Password" />
                             </div>
 
                             <div className="form-group">
-                                <label>Name</label>
+                                <label className="formDesc">Name</label>
                                 <input type="text" value={this.state.mname} onChange={e => this.setState({ mname: e.target.value })} className="form-control" placeholder="Enter Manifactor Name" />
                             </div>
 

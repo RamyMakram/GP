@@ -948,13 +948,13 @@ button {
 }
 
 .s130 {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: center;
     justify-content: center;
     font-family: 'Poppins', sans-serif;
-    background: url("./assets/images/banner1.png");
+    /* background: url("./assets/images/banner1.png"); */
     background-position: bottom right;
     background-repeat: no-repeat;
     background-size: 100%;
@@ -964,7 +964,7 @@ button {
 .s130 form {
     width: 100%;
     max-width: 790px;
-    padding-top: 24vh;
+    /* padding-top: 24vh; */
 }
 
 .s130 form .inner-form {
@@ -1078,7 +1078,8 @@ button {
 
 .s130 form .info {
     font-size: 15px;
-    color: #ccc;
+    color: black;
+    letter-spacing: 4px;
     padding-left: 26px;
 }
 
@@ -1143,12 +1144,12 @@ button {
 }
 
 .s130 {
-    background-image: url("./assets/images/banner1.png");
+    /* background-image: url("./assets/images/banner1.png"); */
     background-size: 100% 100%;
 }
 
 .s130 {
-    min-height: calc(100vh - 86px);
+    /* min-height: calc(100vh - 86px); */
     width: 100%;
 }
 

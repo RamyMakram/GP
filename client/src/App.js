@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import Home from "./components/home.component";
@@ -7,14 +7,14 @@ import Manifactor from "./components/manifiactor.component";
 import pharmacy from "./components/pharmacy.component";
 import admin from "./components/admin.component";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Shared_Vars from "./components/Helper/shared";
 import getWeb3 from "./getWeb3";
+import { useLocation } from 'react-router-dom'
 
 function App() {
   getWeb3();
   return (<Router>
     <div className="App" style={{ margin: '0px' }}>
-      <div className="row" style={{ height: '57px' }}>
+      <div className="row" style={{ height: '66px' }}>
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
             <Link className="navbar-brand" to={"/"}>Fakes</Link>
@@ -29,8 +29,8 @@ function App() {
         </nav>
       </div>
 
-      <div className="row" style={{ height: 'calc(100% - 57px)' }}>
-        <div className="inner">
+      <div className="row" style={{ backgroundSize: 'calc(100% - 66px) 100%', height: 'calc(100% - 66px)', backgroundImage: useLocation().pathname == "/" ? 'url(' + require('./assets/images/banner1.png') + ')' : '' }}>
+        <div className="inner" style={{}}>
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path="/sign-in" component={Login} />

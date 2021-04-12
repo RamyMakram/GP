@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import PharmacyContract from "../contracts/Pharmacy.json";
-import MainifactorContract from "../contracts/Mainifactors.json";
+// import PharmacyContract from "../contracts/Pharmacy.json";
+// import MainifactorContract from "../contracts/Mainifactors.json";
 import getWeb3 from "../getWeb3"
 
 export default class Home extends Component {

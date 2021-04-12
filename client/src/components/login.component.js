@@ -12,7 +12,7 @@ export default class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
         let interval = setInterval(async () => {
-            if (Shared.web3 != null) {
+            if (Shared.web3 != null&&Shared.Address!=null) {
                 clearInterval(interval);
                 await this.loading();
             }
@@ -41,7 +41,7 @@ export default class Login extends Component {
                     PharmacyContract.abi,
                     deployedNetwork2 && deployedNetwork2.address,
                 );
-                var x = await instance2.methods.login(this.state.username, this.state.pass).call({ from: this.state.accounts[0], gas: 3000000 });
+                var x = await instance2.methods.login(this.state.username, this.state.pass).call({ from: Shared.Address, gas: 3000000 });
                 if (x["deleted"]) {
                     this.setState({
                         errorLogin: true,
@@ -65,7 +65,7 @@ export default class Login extends Component {
                     MainifactorContract.abi,
                     deployedNetwork22 && deployedNetwork22.address,
                 );
-                var x = await instance22.methods.login(this.state.username, this.state.pass).call({ from: this.state.accounts[0], gas: 3000000 });
+                var x = await instance22.methods.login(this.state.username, this.state.pass).call({ from: Shared.Address, gas: 3000000 });
                 console.log(x)
                 if (x["deleted"]) {
                     this.setState({
@@ -98,7 +98,7 @@ export default class Login extends Component {
                 break;
         }
 
-        // await instance2.methods.regiter("ramy", ("ramy"), ("ramy")).send({ from:this.state.accounts[0], gas: 3000000 });
+        // await instance2.methods.regiter("ramy", ("ramy"), ("ramy")).send({ from:Shared.Address, gas: 3000000 });
 
     }
     onSiteChanged(e) {

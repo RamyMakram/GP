@@ -14,7 +14,7 @@ export default class Manifactor extends Component {
         this.confirmOrder = this.confirmOrder.bind(this);
         this.getOrders = this.getOrders.bind(this);
         let interval = setInterval(async () => {
-            if (Shared.web3 != null) {
+            if (Shared.web3 != null && Shared.Address != null) {
                 clearInterval(interval);
                 await this.loading();
             }
@@ -57,7 +57,7 @@ export default class Manifactor extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, this.state.User).send({ from: this.state.accounts[0], gas: 3000000 });
+            await contract.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, this.state.User).send({ from: Shared.Address, gas: 3000000 });
             this.setState({
                 loading: false,
                 message: "Addedd Successfully",
@@ -89,8 +89,8 @@ export default class Manifactor extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.getmedicienbymanf(this.state.User).send({ from: this.state.accounts[0], gas: 3000000 });
-            var data = await contract.methods.returnSearchedData().call({ from: this.state.accounts[0], gas: 3000000 });
+            await contract.methods.getmedicienbymanf(this.state.User).send({ from: Shared.Address, gas: 3000000 });
+            var data = await contract.methods.returnSearchedData().call({ from: Shared.Address, gas: 3000000 });
             this.setState({
                 medicen: data,
                 loading: false
@@ -119,12 +119,8 @@ export default class Manifactor extends Component {
             MedNetwork && MedNetwork.address,
         );
         try {
-            await PHcontract.methods.confirmOrder(id).send({ from: this.state.accounts[0], gas: 3000000 });
-            await MEcontract.methods.deleiverMedicien(medid).send({ from: this.state.accounts[0], gas: 3000000 });
-            var MediecnDATA = await MEcontract.methods.getmedicien(medid).call({ from: this.state.accounts[0], gas: 3000000 });
-            console.log(MediecnDATA)
-            await PHcontract.methods.addmedicen(MediecnDATA["name"], MediecnDATA["serial"], MediecnDATA["productiondate"], MediecnDATA["expiredate"], MediecnDATA["manfiactorid"], this.state.User).send({ from: this.state.accounts[0], gas: 3000000 });
-            this.state.orders.splice(this.state.orders.findIndex(q => q.orderid == id), 1)
+            await PHcontract.methods.confirmOrder(id).send({ from: Shared.Address, gas: 3000000 });
+            this.state.orders[this.state.orders.findIndex(q => q.orderid == id)].confirmed = true;
             this.setState({
                 loading: false,
                 orders: this.state.orders
@@ -146,14 +142,14 @@ export default class Manifactor extends Component {
             PharmacyContract.abi,
             Network && Network.address,
         );
-        console.log(this.state.accounts[0])
+        console.log(Shared.Address)
         try {
             console.log(contract)
             console.log(this.state.User)
             console.log(Network)
-            await contract.methods.SSgetOrderbypharma(this.state.User).send({ from: this.state.accounts[0], gas: 4600000 });
+            await contract.methods.SSgetOrderbypharma(this.state.User).send({ from: Shared.Address, gas: 4600000 });
             console.log("getData")
-            var data = await contract.methods.returnSearchedOrderData().call({ from: this.state.accounts[0], gas: 4600000 });
+            var data = await contract.methods.returnSearchedOrderData().call({ from: Shared.Address, gas: 4600000 });
             console.log(data)
             this.setState({
                 orders: data,
@@ -190,26 +186,26 @@ export default class Manifactor extends Component {
                         </div>
                     </nav>
                     <div className="tab-content" id="nav-tabContent">
-                        <div className={"tab-pane fade" + (this.state.activepage == 0 ? " show active" : "")} id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <form onSubmit={this.AddMedicien}>
+                        <div className={"tab-pane fade" + (this.state.activepage == 0 ? " show active" : "")} style={{ textAlign: "center" }} id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                            <form onSubmit={this.AddMedicien} style={{ width: '50vw', margin: 'auto' }}>
                                 <h3>Add Medicien</h3>
                                 <div className="form-group">
-                                    <label>Name</label>
+                                    <label className="formDesc">Name</label>
                                     <input type="text" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} className="form-control" placeholder="Name" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Serial</label>
+                                    <label className="formDesc">Serial</label>
                                     <input type="text" value={this.state.serial} onChange={e => this.setState({ serial: e.target.value })} className="form-control" placeholder="Serial" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Production Date</label>
+                                    <label className="formDesc">Production Date</label>
                                     <input type="Date" value={this.state.STRproductiondate} onChange={e => { this.setState({ productiondate: e.target.valueAsNumber, STRproductiondate: e.target.value }); }} className="form-control" placeholder="Production Date" />
                                 </div>
 
                                 <div className="form-group">
-                                    <label>Expire Date</label>
+                                    <label className="formDesc">Expire Date</label>
                                     <input type="Date" value={this.state.STRexpiredate} onChange={e => { this.setState({ expiredate: e.target.valueAsNumber, STRexpiredate: e.target.value }); }} className="form-control" placeholder="Expire Date" />
                                 </div>
 
