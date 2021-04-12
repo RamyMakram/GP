@@ -5640,18 +5640,18 @@
     "3": {
       "events": {},
       "links": {},
-      "address": "0x5BE91347Ba8C513555C1de143310681202bb2EB2",
-      "transactionHash": "0xe5d693342f8efea3a22903b38975bb7f641a7f4f199963bac9606701c80a3c21"
+      "address": "0x6C9e02694B44Aee5dF3C6E6D2590bCba6bdadf92",
+      "transactionHash": "0x0dc994f2e0ec8ab16d41a0cc0a8ab4170b929973384265e08be36533c53b9d0b"
     },
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xe7C97A31c1877BEC9bDB1462EdE261aDf66cE6bf",
-      "transactionHash": "0x6d307872d39e5d5c597e9feedc275071d14c350427c6f64ea5193c2a383f78b6"
+      "address": "0xc3659d2D7363Fd40Fe0D0e383AE722a0EFAb570a",
+      "transactionHash": "0xb655c773955d7c809e2f699360cd934c33ec913a16e5fbf73c2403bdc59b059f"
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-03-19T14:45:04.418Z",
+  "updatedAt": "2021-04-12T11:29:35.158Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implements voting process along with vote delegation",

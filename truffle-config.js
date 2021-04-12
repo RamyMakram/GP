@@ -10,7 +10,7 @@ module.exports = {
       port: 8545
     }, rinkeby: {
       provider: function () {
-        return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/3cde25891ff9434fb7f1ca4a8322d705",5);
+        return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/d8b7fcc1456a415e961fcd49c8b6e945",5);
       },
       from: "0x7d9bf8Ae9DDB624721b779859e2bd95f8dfFA977",
       network_id: 3,

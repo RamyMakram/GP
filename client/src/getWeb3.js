@@ -7,7 +7,7 @@ const getWeb3 = () =>
   new Promise((resolve, reject) => {
     // Wait for loading completion to avoid race conditions with web3 injection timing.
     window.addEventListener("load", async () => {
-      const provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/3cde25891ff9434fb7f1ca4a8322d705", 5);
+      const provider = new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/d8b7fcc1456a415e961fcd49c8b6e945", 5);
       const web3 = new Web3(provider);
       console.log("No web3 instance injected, using Local web3.");
       resolve(web3);

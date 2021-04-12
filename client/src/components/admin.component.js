@@ -45,7 +45,10 @@ export default class admin extends Component {
             await contract.methods.regiter(this.state.pusername, this.state.ppass, this.state.pname).send({ from: this.state.accounts[0], gas: 3000000 });
             this.setState({
                 loading: false,
-                message: 'Added Successfuly'
+                message: 'Added Successfuly',
+                pusername:'',
+                ppass:'',
+                pname:''
             })
             setTimeout(() => {
                 this.setState({
@@ -65,6 +68,9 @@ export default class admin extends Component {
         }
     }
     async AddManficator(event) {
+        this.setState({
+            loading: true
+        })
         event.preventDefault();
         let Network = MainifactorContract.networks[this.state.networkId];
         let contract = new this.state.web3.eth.Contract(
@@ -75,7 +81,10 @@ export default class admin extends Component {
             await contract.methods.regiter(this.state.musername, this.state.mpass, this.state.mname).send({ from: this.state.accounts[0], gas: 3000000 });
             this.setState({
                 loading: false,
-                message: 'Added Successfuly'
+                message: 'Added Successfuly',
+                musername:'',
+                mpass:'',
+                mname:''
             })
             setTimeout(() => {
                 this.setState({

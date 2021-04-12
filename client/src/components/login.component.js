@@ -1,28 +1,39 @@
 import React, { Component } from "react";
 import PharmacyContract from "../contracts/Pharmacy.json";
 import MainifactorContract from "../contracts/Mainifactors.json";
-import getWeb3 from "../getWeb3";
+import Loading from "../components/loader.component";
+import Shared from "../components/Helper/shared"
 
 export default class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = { username: '', pass: '', type: '', web3: null, contract: null, site: "P", accounts: null, networkId: null, errorLogin: false }
+        this.state = { loading: true, username: '', pass: '', type: '', web3: null, contract: null, site: "P", accounts: null, networkId: null, errorLogin: false }
         this.onSiteChanged = this.onSiteChanged.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
+        let interval = setInterval(async () => {
+            if (Shared.web3 != null) {
+                clearInterval(interval);
+                await this.loading();
+            }
+
+        }, 1000);
     }
-    componentDidMount = async () => {
-        const web3 = await getWeb3();
+    loading = async () => {
+        const web3 = Shared.web3;
         const accounts = await web3.eth.getAccounts();
         const networkId = await web3.eth.net.getId();
 
         this.setState({
             accounts: accounts,
             web3: web3,
-            networkId: networkId
+            networkId: networkId,
+            loading: false
         })
     }
     async handleSubmit(event) {
         event.preventDefault();
+        this.setState({ loading: true })
         switch (this.state.site) {
             case "P":
                 let deployedNetwork2 = PharmacyContract.networks[this.state.networkId];
@@ -31,18 +42,19 @@ export default class Login extends Component {
                     deployedNetwork2 && deployedNetwork2.address,
                 );
                 var x = await instance2.methods.login(this.state.username, this.state.pass).call({ from: this.state.accounts[0], gas: 3000000 });
-                console.log(x)
                 if (x["deleted"]) {
                     this.setState({
                         errorLogin: true,
                         username: "",
-                        pass: ""
+                        pass: "",
+                        loading: false
                     })
                 }
                 else {
-                    localStorage.setItem('P', x);
+                    localStorage.setItem('P', x["userid"]);
                     this.setState({
-                        errorLogin: false
+                        errorLogin: false,
+                        loading: false
                     })
                     this.props.history.push('/pharmacy');
                 }
@@ -59,20 +71,22 @@ export default class Login extends Component {
                     this.setState({
                         errorLogin: true,
                         username: "",
-                        pass: ""
+                        pass: "",
+                        loading:false
                     })
                 }
                 else {
-                    localStorage.setItem('M', x);
+                    localStorage.setItem('M', x["userid"]);
                     this.setState({
-                        errorLogin: false
+                        errorLogin: false,
+                        loading:false
                     })
                     this.props.history.push('/manifactor');
                 }
                 break;
 
             case "A":
-                console.log("admin")
+                // console.log("admin")
                 this.props.history.push('/admin');
                 if (this.state.usernam == "admin" && this.state.pass == "admin") {
 
@@ -94,26 +108,21 @@ export default class Login extends Component {
         });
     }
     render() {
-        let div;
-        if (this.state.errorLogin) {
-            div = <div className="alert alert-danger" role="alert">
-                Wrong UserName Or Password Please Try Again With Real Data
-          </div>
-        }
         return (
-            
-            <div className="viwe login">
+            this.state.loading ? <Loading /> : (<div className="viwe login">
                 <form onSubmit={this.handleSubmit} >
-
                     <h3>Log in</h3>
-                    {div}
+                    {this.state.errorLogin ? (
+                        <div className="alert alert-danger" role="alert">
+                            Wrong UserName Or Password Please Try Again With Real Data
+                        </div>) : <span></span>}
                     <div className="form-group">
-                        <label>User Name</label>
+                        <label className="formDesc">User Name</label>
                         <input type="text" className="form-control" placeholder="Enter email" value={this.state.username} onChange={e => this.setState({ username: e.target.value })} />
                     </div>
 
                     <div className="form-group">
-                        <label>Password</label>
+                        <label className="formDesc">Password</label>
                         <input type="password" className="form-control" placeholder="Enter password" value={this.state.pass} onChange={e => this.setState({ pass: e.target.value })} />
                     </div>
                     <div className="form-group">
@@ -138,11 +147,8 @@ export default class Login extends Component {
                     </div>
 
                     <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
-                    {/* <p className="forgot-password text-right">
-    Forgot <a href="#">password?</a>
-</p> */}
                 </form>
 
-            </div>);
+            </div>));
     }
 }

@@ -67,6 +67,14 @@ contract Pharmacy {
             }
         }
     }
+    function SSgetOrderbypharma(uint _pharmaid) public {
+        delete _SearchOrders;
+        for (uint i = 0; i < orders.length; i++) {
+            if(orders[i].manfiactorid==_pharmaid){
+                _SearchOrders.push( orders[i]);
+            }
+        }
+    }
     
      function addOrder(uint medicienid,uint manfiactorid,uint parmacyid)public{
             orders.push(Order({
