@@ -57,7 +57,8 @@ export default class Manifactor extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, this.state.User).send({ from: Shared.Address, gas: 3000000 });
+            var data = await contract.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, this.state.User).send({ from: Shared.Address, gas: 3000000 });
+            console.log(data);
             this.setState({
                 loading: false,
                 message: "Addedd Successfully",
