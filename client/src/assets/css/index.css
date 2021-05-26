@@ -1,0 +1,57 @@
+@import url('http://fonts.cdnfonts.com/css/frutiger-neue-lt');
+a.nav-link {
+    padding: 0 25px;
+    color: #F23B9F !important;
+    font-weight: bolder;
+    font-size: 21px;
+    text-transform: uppercase;
+}
+.nav-item{
+    padding: 0 12px;
+}
+
+*,body {
+	font-family: 'Frutiger Neue LT', sans-serif;
+}
+.mainbody{
+    height: calc(100% - 106px) !important;
+}
+input.form-control{
+    border-radius: 51px;
+    height: 49px;
+    padding: 24px;
+    background: #FFF2E1;
+    border: 1px solid orange;
+    outline: orange !important;
+}
+input.form-control:focus{
+    box-shadow: 0 0 0 0.2rem #fff2e1;
+    border: 1px solid orange;
+}
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #FFF2E1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid orange;
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #ffa500;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid orange;
+}
