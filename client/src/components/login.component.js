@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import UserContract from "../contracts/User.json";
+import UserContract from "../contracts/User_Login.json";
 import Loading from "../components/loader.component";
 import Shared from "../components/Helper/shared"
 import '../assets/css/login.css'
@@ -12,7 +12,7 @@ export default class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
 
         let interval = setInterval(async () => {
-            if (Shared.web3 != null&&Shared.Address!=null) {
+            if (Shared.web3 != null && Shared.Address != null) {
                 clearInterval(interval);
                 await this.loading();
             }
@@ -41,8 +41,9 @@ export default class Login extends Component {
         );
         switch (this.state.site) {
             case "P":
-                var x = await contract.methods.login(this.state.username, this.state.pass,"p").call({ from: Shared.Address, gas: 3000000 });
-                if (x["deleted"]) {
+                var x = await contract.methods.login(this.state.username, this.state.pass, "p").call({ from: Shared.Address, gas: 3000000 });
+                console.log(x)
+                if (!x["active"]) {
                     this.setState({
                         errorLogin: true,
                         username: "",
@@ -56,58 +57,53 @@ export default class Login extends Component {
                         errorLogin: false,
                         loading: false
                     })
-                    this.props.history.push('/pharmacy');
+                    window.location.href = "/pharmacy"
+
                 }
                 break;
             case "M":
-                var x = await contract.methods.login(this.state.username, this.state.pass,"m").call({ from: Shared.Address, gas: 3000000 });
+                var x = await contract.methods.login(this.state.username, this.state.pass, "m").call({ from: Shared.Address, gas: 3000000 });
                 console.log(x)
-                if (x["deleted"]) {
+                if (!x["active"]) {
                     this.setState({
                         errorLogin: true,
                         username: "",
                         pass: "",
-                        loading:false
+                        loading: false
                     })
                 }
                 else {
                     localStorage.setItem('M', x["userid"]);
                     this.setState({
                         errorLogin: false,
-                        loading:false
+                        loading: false
                     })
-                    this.props.history.push('/manifactor');
+                    window.location.href = "/manifactor"
+
                 }
                 break;
 
             case "A":
                 // console.log("admin")
-                this.props.history.push('/admin');
-                if (this.state.usernam == "admin" && this.state.pass == "admin") {
-
-                } else {
+                var x = await contract.methods.login(this.state.username, this.state.pass, "a").call({ from: Shared.Address, gas: 3000000 });
+                console.log(x)
+                if (x["active"]) {
                     this.setState({
-                        errorLogin: false
+                        errorLogin: true,
+                        username: "",
+                        pass: "",
+                        loading: false
                     })
                 }
-                // var x = await contract.methods.login(this.state.username, this.state.pass,"a").call({ from: Shared.Address, gas: 3000000 });
-                // console.log(x)
-                // if (x["deleted"]) {
-                //     this.setState({
-                //         errorLogin: true,
-                //         username: "",
-                //         pass: "",
-                //         loading:false
-                //     })
-                // }
-                // else {
-                //     localStorage.setItem('M', x["userid"]);
-                //     this.setState({
-                //         errorLogin: false,
-                //         loading:false
-                //     })
-                //     this.props.history.push('/manifactor');
-                // }
+                else {
+                    localStorage.setItem('M', x["userid"]);
+                    this.setState({
+                        errorLogin: false,
+                        loading: false
+                    })
+                    window.location.href = "/admin"
+
+                }
                 // break
                 break;
         }

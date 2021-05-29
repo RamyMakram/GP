@@ -10,7 +10,7 @@ module.exports = {
       port: 8545
     }, ropsten: {
       provider: function () {
-        return new HDWalletProvider(mnemonic, "wss://ropsten.infura.io/ws/v3/d8b7fcc1456a415e961fcd49c8b6e945", 5);
+        return new HDWalletProvider(mnemonic, "wss://ropsten.infura.io/ws/v3/3214b747d84641ae88eb5de17499f67a", 5);
       },
       // from: "0x5Ac03fb1d61A3388E2b3Cf99F1219c641747A8FF",
       websockets: true,

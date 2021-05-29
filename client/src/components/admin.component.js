@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import UserContract from "../contracts/User.json";
+import UserContract from "../contracts/User_Login.json";
 import Shared from '../components/Helper/shared'
 import Loading from "./loader.component"
 
 export default class admin extends Component {
     constructor(props) {
         super(props);
-        this.state = { message: '', error: '', pusername: '', ppass: '', pname: '', musername: '', mpass: '', mname: '', web3: null, contract: null, site: "", accounts: null, networkId: null, errorLogin: false, loading: true }
+        this.state = { message: '', error: '', pusername: '', ppass: '', pname: '', pphone: '', musername: '', mpass: '', mname: '', web3: null, contract: null, site: "", accounts: null, networkId: null, errorLogin: false, loading: true }
         this.AddPharmacy = this.AddPharmacy.bind(this);
         this.AddManficator = this.AddManficator.bind(this);
         let interval = setInterval(async () => {
@@ -40,7 +40,7 @@ export default class admin extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.regiter(this.state.pusername, this.state.ppass, this.state.pname, "p",new Date().getDate()   ).send({ from: Shared.Address, gas: 3000000 });
+            await contract.methods.regiter(this.state.pusername, this.state.ppass, this.state.pname, "p", new Date().getDate(), this.state.pphone).send({ from: Shared.Address, gas: 3000000 });
             this.setState({
                 loading: false,
                 message: 'Added Successfuly',
@@ -77,7 +77,7 @@ export default class admin extends Component {
             Network && Network.address,
         );
         try {
-            await contract.methods.regiter(this.state.musername, this.state.mpass, this.state.mname, "m",new Date().getDate()).send({ from: Shared.Address, gas: 3000000 });
+            await contract.methods.regiter(this.state.musername, this.state.mpass, this.state.mname, "m", new Date().getDate(),this.state.mphone).send({ from: Shared.Address, gas: 3000000 });
             this.setState({
                 loading: false,
                 message: 'Added Successfuly',
@@ -125,16 +125,6 @@ export default class admin extends Component {
     render() {
         let data = (
             <div className="viwe">
-                {this.state.message != "" ? (
-                    <div className="alert alert-success">
-                        {this.state.message}
-                    </div>
-                ) : (<span></span>)}
-                {this.state.error != "" ? (
-                    <div className="alert alert-danger">
-                        {this.state.error}
-                    </div>
-                ) : (<span></span>)}
                 <nav>
                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
                         <button className="nav-link active" id="nav-home-tab" data-toggle="tab" data-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Add Pharmacy</button>
@@ -145,6 +135,16 @@ export default class admin extends Component {
                 </nav>
                 {/* {div} */}
                 <div className="tab-content" id="nav-tabContent">
+                {this.state.message != "" ? (
+                    <div className="alert alert-success">
+                        {this.state.message}
+                    </div>
+                ) : (<span></span>)}
+                {this.state.error != "" ? (
+                    <div className="alert alert-danger">
+                        {this.state.error}
+                    </div>
+                ) : (<span></span>)}
                     <div className="tab-pane fade show active" id="nav-home" style={{ textAlign: "center" }} role="tabpanel" aria-labelledby="nav-home-tab">
                         <form onSubmit={this.AddPharmacy} style={{ width: '50vw', margin: 'auto' }}>
                             <h3 style={{ paddingTop: 25 + 'px' }}>Add Pharmacy</h3>
@@ -161,6 +161,10 @@ export default class admin extends Component {
                             <div className="form-group">
                                 <label className="formDesc">Name</label>
                                 <input type="text" value={this.state.pname} onChange={e => this.setState({ pname: e.target.value })} className="form-control" placeholder="Enter Pharmacy Name" />
+                            </div>
+                            <div className="form-group">
+                                <label className="formDesc">Phone</label>
+                                <input type="text" value={this.state.pphone} onChange={e => this.setState({ pphone: e.target.value })} className="form-control" placeholder="Enter Pharmacy Phone" />
                             </div>
 
                             <button type="submit" className="btn btn-dark btn-lg btn-block">Save</button>
@@ -182,6 +186,11 @@ export default class admin extends Component {
                             <div className="form-group">
                                 <label className="formDesc">Name</label>
                                 <input type="text" value={this.state.mname} onChange={e => this.setState({ mname: e.target.value })} className="form-control" placeholder="Enter Manifactor Name" />
+                            </div>
+
+                            <div className="form-group">
+                                <label className="formDesc">Phone</label>
+                                <input type="text" value={this.state.mphone} onChange={e => this.setState({ mphone: e.target.value })} className="form-control" placeholder="Enter Manifactor Phone" />
                             </div>
 
                             <button type="submit" className="btn btn-dark btn-lg btn-block">Save Manficator</button>

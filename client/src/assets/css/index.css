@@ -6,17 +6,20 @@ a.nav-link {
     font-size: 21px;
     text-transform: uppercase;
 }
-.nav-item{
+
+.nav-item {
     padding: 0 12px;
 }
 
-*,body {
-	font-family: 'Frutiger Neue LT', sans-serif;
+*, body {
+    font-family: 'Frutiger Neue LT', sans-serif;
 }
-.mainbody{
+
+.mainbody {
     height: calc(100% - 106px) !important;
 }
-input.form-control{
+
+input.form-control {
     border-radius: 51px;
     height: 49px;
     padding: 24px;
@@ -24,10 +27,12 @@ input.form-control{
     border: 1px solid orange;
     outline: orange !important;
 }
-input.form-control:focus{
+
+input.form-control:focus {
     box-shadow: 0 0 0 0.2rem #fff2e1;
     border: 1px solid orange;
 }
+
 input[type='radio']:after {
     width: 15px;
     height: 15px;
@@ -54,4 +59,71 @@ input[type='radio']:checked:after {
     display: inline-block;
     visibility: visible;
     border: 2px solid orange;
+}
+
+.row.mainbody {
+    background-size: 100% !important;
+    background-image: url(/static/media/banner1.ae6cb8ed.png);
+}
+
+.nav.nav-tabs .nav-link {
+    border-radius: 0;
+    color: white;
+    background-color: #55D8D7;
+    transition: 0.5s;
+}
+
+.nav.nav-tabs .nav-link.active {
+    color: black;
+    background-color: #FFBF67;
+    transition: 0.5;
+    border: 0 !important;
+    border-color: transparent !important;
+}
+
+.nav.nav-tabs .nav-link:hover {
+    background-color: #55d8d787;
+    transition: 0.5s;
+    color: black;
+}
+
+button.nav-link:nth-of-type(1) {
+    border-top-left-radius: 20px !important;
+}
+
+button.nav-link:nth-last-child(1) {
+    border-top-right-radius: 20px !important;
+}
+
+.table-bordered {
+    border: 2px solid #FFBF67 !important;
+    border-radius: 25px !important;
+}
+
+th, td {
+    border: 1px solid #FFBF67 !important;
+}
+
+.btn {
+    background-color: #FFBF67;
+    border-color: orange;
+    transition: 0.5s;
+    color: white !important;
+}
+.btn:hover{
+    background-color: orange !important;
+    border-color: #FFBF67 !important;
+    transition: 0.5s;
+    color: white !important;
+}
+
+.btn:active {
+    background-color: #FFBF67 !important;
+    border-color: orange !important;
+    transition: 0.5s;
+}
+
+.btn:focus {
+    border-color: orange !important;
+    box-shadow: 0 0 0 0.2rem #FFBF67 !important;
 }

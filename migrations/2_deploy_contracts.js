@@ -1,7 +1,7 @@
 const MigrationOne = artifacts.require("Order");
 const MigrationTwo = artifacts.require("Mediciences");
 const MigrationThree = artifacts.require("Pharmacy");
-const MigrationFour = artifacts.require("User");
+const MigrationFour = artifacts.require("User_Login");
 
 module.exports = function(deployer, network, accounts) {
     deployer.deploy(MigrationOne, {from: accounts[0]});

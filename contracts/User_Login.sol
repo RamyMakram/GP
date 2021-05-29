@@ -14,6 +14,7 @@ contract User_Login {
         string name;
         string username;
         string password;
+        string phone;
         uint256 addedOn;
         string _type; //"a" admin,"p" pharmacy,"m" manfiactor
     }
@@ -32,6 +33,7 @@ contract User_Login {
                     username: "admin",
                     password: "admin",
                     _type:"a",
+                    phone:"",
                     addedOn:0
                 })
             );
@@ -69,6 +71,7 @@ contract User_Login {
                     username: "null",
                     password: "null",
                     addedOn:0,
+                    phone:"",
                     _type:""
                 });
     }
@@ -78,7 +81,8 @@ contract User_Login {
         string memory password,
         string memory name,
         string memory typ,
-        uint256 add
+        uint256 add,
+        string memory _phone
     ) public {
         User_Obj memory user = login(username, password,typ);
         if (user.active == false) {
@@ -90,6 +94,7 @@ contract User_Login {
                     username: username,
                     password: password,
                     _type:typ,
+                    phone:_phone,
                     addedOn:add
                 })
             );

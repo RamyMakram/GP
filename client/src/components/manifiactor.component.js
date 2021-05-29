@@ -78,6 +78,7 @@ export default class Manifactor extends Component {
                 errorLogin: false,
                 error: "Error When Adding Medicien"
             })
+            console.log(error)
         }
     }
     async getMediciens() {
@@ -164,6 +165,14 @@ export default class Manifactor extends Component {
         return (
             this.state.loading ? <Loading /> :
                 <div className="viwe">
+                    <nav>
+                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button className={"nav-link" + (this.state.activepage == 0 ? " active" : "")} id="nav-home-tab" onClick={() => this.switch(0)} data-toggle="tab" data-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Add Medicien</button>
+                            <button className={"nav-link" + (this.state.activepage == 1 ? " active" : "")} id="nav-contact-tab" onClick={() => this.switch(1)} data-toggle="tab" data-target="#nav-med" type="button" role="tab" aria-controls="nav-med" aria-selected="false">All Mediciens</button>
+                            <button className={"nav-link" + (this.state.activepage == 2 ? " active" : "")} id="nav-profile-tab" onClick={() => this.switch(2)} data-toggle="tab" data-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">All Order</button>
+                        </div>
+                    </nav>
+                    <div className="tab-content" id="nav-tabContent">
                     {this.state.message != "" ? (
                         <div className="alert alert-success">
                             {this.state.message}
@@ -174,14 +183,6 @@ export default class Manifactor extends Component {
                             {this.state.error}
                         </div>
                     ) : (<span></span>)}
-                    <nav>
-                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button className={"nav-link" + (this.state.activepage == 0 ? " active" : "")} id="nav-home-tab" onClick={() => this.switch(0)} data-toggle="tab" data-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Add Medicien</button>
-                            <button className={"nav-link" + (this.state.activepage == 1 ? " active" : "")} id="nav-contact-tab" onClick={() => this.switch(1)} data-toggle="tab" data-target="#nav-med" type="button" role="tab" aria-controls="nav-med" aria-selected="false">All Mediciens</button>
-                            <button className={"nav-link" + (this.state.activepage == 2 ? " active" : "")} id="nav-profile-tab" onClick={() => this.switch(2)} data-toggle="tab" data-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">All Order</button>
-                        </div>
-                    </nav>
-                    <div className="tab-content" id="nav-tabContent">
                         <div className={"tab-pane fade" + (this.state.activepage == 0 ? " show active" : "")} style={{ textAlign: "center" }} id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <form onSubmit={this.AddMedicien} style={{ width: '50vw', margin: 'auto' }}>
                                 <h3>Add Medicien</h3>

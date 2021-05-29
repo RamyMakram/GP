@@ -9,6 +9,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/index.css'
 import getWeb3 from "./getWeb3";
 import { useLocation } from 'react-router-dom'
+import pharmacy from "./components/pharmacy.component";
+import Sign_InPartial from "./components/Helper/signin-partial";
 
 function App() {
   getWeb3();
@@ -30,9 +32,8 @@ function App() {
                   <Link className="nav-link" to={"/sign-in"}>Contact US</Link>
 
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
-                </li>
+                  <Sign_InPartial></Sign_InPartial>
+                
               </ul>
             </div>
           </div>
@@ -46,6 +47,7 @@ function App() {
             <Route path="/sign-in" component={Login} />
             <Route path="/manifactor" component={Manifactor} />
             <Route path="/admin" component={admin} />
+            <Route path="/pharmacy" component={pharmacy} />
           </Switch>
         </div>
       </div>

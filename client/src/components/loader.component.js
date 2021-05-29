@@ -6,7 +6,7 @@ class Loading extends Component {
             <div className="loadinger">
                 <div className="col-12">
                     <img src={require('../assets/images/loading.gif')} />
-                    <p>Loading Please Be Patient</p>
+                    <p>Loading ..., Plz Be Patient</p>
                 </div>
             </div>
         );
