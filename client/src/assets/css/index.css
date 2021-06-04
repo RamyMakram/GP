@@ -10,7 +10,9 @@ a.nav-link {
 .nav-item {
     padding: 0 12px;
 }
-
+body{
+    overflow: hidden !important;
+}
 *, body {
     font-family: 'Frutiger Neue LT', sans-serif;
 }

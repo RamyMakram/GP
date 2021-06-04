@@ -10,6 +10,9 @@ import './assets/css/index.css'
 import getWeb3 from "./getWeb3";
 import { useLocation } from 'react-router-dom'
 import pharmacy from "./components/pharmacy.component";
+import About_US from './components/static_Compents/about-us.component';
+import faq from './components/static_Compents/faq.component';
+
 import Sign_InPartial from "./components/Helper/signin-partial";
 
 function App() {
@@ -23,17 +26,16 @@ function App() {
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-in"}>About</Link>
+                  <Link className="nav-link" to={"/about"}>About</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-in"}>FAQ</Link>
+                  <Link className="nav-link" to={"/faq"}>FAQ</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to={"/sign-in"}>Contact US</Link>
 
                 </li>
                   <Sign_InPartial></Sign_InPartial>
-                
               </ul>
             </div>
           </div>
@@ -48,6 +50,8 @@ function App() {
             <Route path="/manifactor" component={Manifactor} />
             <Route path="/admin" component={admin} />
             <Route path="/pharmacy" component={pharmacy} />
+            <Route path="/about" component={About_US} />
+            <Route path="/faq" component={faq} />
           </Switch>
         </div>
       </div>
