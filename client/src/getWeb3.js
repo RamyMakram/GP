@@ -11,7 +11,7 @@ const getWeb3 = () =>
       resolve(web3);
       Shared_Vars.web3 = web3;
       var accounts = await web3.eth.getAccounts();
-      Shared_Vars.Address = accounts[0]
+      Shared_Vars.Address = accounts[1]
     });
   });
 

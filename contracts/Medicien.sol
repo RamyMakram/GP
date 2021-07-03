@@ -18,6 +18,9 @@ contract Mediciences {
         string manfiactorname;
         bool delivired;
         bool ordered;
+        uint256 createdDate;
+        uint256 orderedDate;
+        uint256 deliveredDate;
     }
 
     Medicien[] public mediciences;
@@ -77,7 +80,10 @@ contract Mediciences {
                 manfiactorid: 0,
                 manfiactorname: "",
                 delivired: false,
-                ordered: false
+                ordered: false,
+                createdDate: 0,
+                orderedDate: 0,
+                deliveredDate: 0
             });
     }
 
@@ -104,7 +110,10 @@ contract Mediciences {
                 manfiactorname: "",
                 manfiactorid: 0,
                 delivired: false,
-                ordered: false
+                ordered: false,
+                createdDate: 0,
+                orderedDate: 0,
+                deliveredDate: 0
             });
     }
 
@@ -114,7 +123,8 @@ contract Mediciences {
         uint256 profuction,
         uint256 expire,
         string memory _manName,
-        uint256 manfiactorid
+        uint256 manfiactorid,
+        uint256 date
     ) public {
         Medicien memory med = getmedicien_serial(_serial);
         if (med.id == 0) {
@@ -128,27 +138,34 @@ contract Mediciences {
                     expiredate: expire,
                     manfiactorid: manfiactorid,
                     delivired: false,
-                    ordered: false
+                    ordered: false,
+                    createdDate: date,
+                    orderedDate: 0,
+                    deliveredDate: 0
                 })
             );
             _id++;
         }
     }
 
-    function OrderMedicien(uint256 _medid) public {
+    function OrderMedicien(uint256 _medid, uint256 date) public {
         for (uint256 i = 0; i < mediciences.length; i++) {
             if (
                 mediciences[i].id == _medid && mediciences[i].ordered == false
             ) {
                 mediciences[i].ordered = true;
+                mediciences[i].orderedDate = date;
             }
         }
     }
 
-    function deleiverMedicien(uint256 _medid) public {
+    function deleiverMedicien(uint256 _medid, uint256 date) public {
         for (uint256 i = 0; i < mediciences.length; i++) {
-            if (mediciences[i].id == _medid && mediciences[i].delivired == false) {
+            if (
+                mediciences[i].id == _medid && mediciences[i].delivired == false
+            ) {
                 mediciences[i].delivired = true;
+                mediciences[i].deliveredDate = date;
             }
         }
     }

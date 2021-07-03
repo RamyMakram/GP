@@ -23,6 +23,7 @@ h1
     background-color: transparent;
     font-size: 22px;
     line-height: 2;
+    border: none !important;
 }
 .sora-lef{
     border:solid;

@@ -6,7 +6,7 @@ class Sign_InPartial extends Component {
         this.state = { logined: (localStorage.getItem("M") != null || localStorage.getItem("P") != null || localStorage.getItem("A") != null) }
         this.logout = this.logout.bind(this);
     }
-    componentDidMount(){
+    componentDidMount() {
         this.setState({ logined: (localStorage.getItem("M") != null || localStorage.getItem("P") != null || localStorage.getItem("A") != null) })
 
     }
@@ -18,7 +18,7 @@ class Sign_InPartial extends Component {
         return (
             <li className="nav-item">
                 {
-                    this.state.logined ? <i class="nav-link fas fa-sign-out-alt" onClick={() => this.logout()}></i> : <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
+                    this.state.logined ? <i className="nav-link fas fa-sign-out-alt" onClick={() => this.logout()}></i> : <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
                 }
             </li>
         );

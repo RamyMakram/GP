@@ -57,7 +57,7 @@ export default class Manifactor extends Component {
             Network && Network.address,
         );
         try {
-            var data = await contract.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, "ManifactorName", this.state.User).send({ from: Shared.Address, gas: 3000000 });
+            var data = await contract.methods.addmedicen(this.state.name, this.state.serial, this.state.productiondate, this.state.expiredate, "ManifactorName", this.state.User, new Date().getTime()).send({ from: Shared.Address, gas: 3000000 });
             console.log(data);
             this.setState({
                 loading: false,
@@ -117,7 +117,7 @@ export default class Manifactor extends Component {
         try {
             await Ocontract.methods.confirmOrder(id).send({ from: Shared.Address, gas: 3000000 });
             let orders = this.state.orders;
-            orders [this.state.orders.findIndex(q => q.orderid == id)].confirmed = true;
+            // orders[this.state.orders.findIndex(q => q.orderid == id)].confirmed = true;
             this.setState({
                 loading: false,
                 orders: orders
@@ -141,9 +141,6 @@ export default class Manifactor extends Component {
         );
         console.log(Shared.Address)
         try {
-            console.log(contract)
-            console.log(this.state.User)
-            console.log(Network)
             await contract.methods.getOrderbymanfi(this.state.User).send({ from: Shared.Address, gas: 4600000 });
             console.log("getData")
             var data = await contract.methods.returnSearchedOrderData().call({ from: Shared.Address, gas: 4600000 });
@@ -173,16 +170,16 @@ export default class Manifactor extends Component {
                         </div>
                     </nav>
                     <div className="tab-content" id="nav-tabContent">
-                    {this.state.message != "" ? (
-                        <div className="alert alert-success">
-                            {this.state.message}
-                        </div>
-                    ) : (<span></span>)}
-                    {this.state.error != "" ? (
-                        <div className="alert alert-danger">
-                            {this.state.error}
-                        </div>
-                    ) : (<span></span>)}
+                        {this.state.message != "" ? (
+                            <div className="alert alert-success">
+                                {this.state.message}
+                            </div>
+                        ) : (<span></span>)}
+                        {this.state.error != "" ? (
+                            <div className="alert alert-danger">
+                                {this.state.error}
+                            </div>
+                        ) : (<span></span>)}
                         <div className={"tab-pane fade" + (this.state.activepage == 0 ? " show active" : "")} style={{ textAlign: "center" }} id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <form onSubmit={this.AddMedicien} style={{ width: '50vw', margin: 'auto' }}>
                                 <h3>Add Medicien</h3>

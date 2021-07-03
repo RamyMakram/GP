@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom'
 import pharmacy from "./components/pharmacy.component";
 import About_US from './components/static_Compents/about-us.component';
 import faq from './components/static_Compents/faq.component';
+import Inquiry from './components/inquiry.component';
 
 import Sign_InPartial from "./components/Helper/signin-partial";
 
@@ -31,10 +32,10 @@ function App() {
                 <li className="nav-item">
                   <Link className="nav-link" to={"/faq"}>FAQ</Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link className="nav-link" to={"/sign-in"}>Contact US</Link>
 
-                </li>
+                </li> */}
                   <Sign_InPartial></Sign_InPartial>
               </ul>
             </div>
@@ -52,6 +53,7 @@ function App() {
             <Route path="/pharmacy" component={pharmacy} />
             <Route path="/about" component={About_US} />
             <Route path="/faq" component={faq} />
+            <Route path="/Inquiry" component={Inquiry} />
           </Switch>
         </div>
       </div>

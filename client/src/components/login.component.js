@@ -119,7 +119,7 @@ export default class Login extends Component {
     }
     render() {
         return (
-            this.state.loading ? <Loading /> : (<div className="viwe login">
+           this.state.loading ? <Loading /> : (<div className="viwe login">
                 <form onSubmit={this.handleSubmit} >
                     <h3>Log in</h3>
                     {this.state.errorLogin ? (

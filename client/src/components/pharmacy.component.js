@@ -38,6 +38,7 @@ export default class pharmacy extends Component {
             web3: web3,
             networkId: networkId
         })
+
         await this.getAllMediciens();
     }
     removeFromCart(id) {
@@ -132,9 +133,11 @@ export default class pharmacy extends Component {
                 errorLogin: false,
                 error: "Error When Adding Medicien"
             })
+            console.log(error)
         }
     }
     async recieveOrder(orderid, medid) {
+        debugger
         let MENetwork = MedicienContract.networks[this.state.networkId];
         let MEcontract = new this.state.web3.eth.Contract(
             MedicienContract.abi,
@@ -153,13 +156,15 @@ export default class pharmacy extends Component {
         );
         try {
             await Ordercontract.methods.recieveOrder(orderid).send({ from: Shared.Address, gas: 3000000 });
-            await MEcontract.methods.deleiverMedicien(medid).send({ from: Shared.Address, gas: 3000000 });
-            await PHcontract.methods.addmedicen(medicenData["name"], medicenData["serial"], medicenData["productiondate"], new Date().getMilliseconds(), medicenData["expiredate"], medicenData["manfiactorid"], this.state.User["id"]).send({ from: Shared.Address, gas: 3000000 });
+            await MEcontract.methods.deleiverMedicien(medid, new Date().getTime()).send({ from: Shared.Address, gas: 3000000 });
+            var sss = await PHcontract.methods.addmedicen(medicenData["name"], medicenData["serial"], "", medicenData["productiondate"], new Date().getMilliseconds(), medicenData["expiredate"], medicenData["manfiactorid"], this.state.User).send({ from: Shared.Address, gas: 3000000 });
+            console.log(sss)
         } catch (error) {
             this.setState({
                 errorLogin: false,
                 error: "Error When Adding Medicien"
             })
+            console.log(error)
         }
     }
     async addOrder() {
@@ -167,6 +172,7 @@ export default class pharmacy extends Component {
             loading: true
         })
         console.log("ss")
+        debugger
         let Network = OrderContract.networks[this.state.networkId];
         let contract = new this.state.web3.eth.Contract(
             OrderContract.abi,
@@ -185,7 +191,7 @@ export default class pharmacy extends Component {
                     loading: true
                 })
                 await contract.methods.addOrder(i["id"], i["manfiactorid"], this.state.User, new Date().getDate()).send({ from: Shared.Address, gas: 3000000 });
-                await Mediciencontract.methods.OrderMedicien(i["manfiactorid"]).send({ from: Shared.Address, gas: 3000000 });
+                await Mediciencontract.methods.OrderMedicien(i["id"], new Date().getTime()).send({ from: Shared.Address, gas: 3000000 });
                 this.setState({
                     loading: false
                 })
@@ -201,7 +207,7 @@ export default class pharmacy extends Component {
                     cart: [],
                     loading: false
                 })
-                localStorage.setItem("cart","[]")
+            localStorage.setItem("cart", "[]")
         }
     }
     async MyMedicen() {
@@ -321,10 +327,11 @@ export default class pharmacy extends Component {
                                                         i["confirmed"] && i["recieved"] ?
                                                             <span></span> :
                                                             ((i["confirmed"] && !i["recieved"]) ?
-                                                                <button className="btn btn-primary" onClick={this.recieveOrder}>Recieve Order</button>
+                                                                <button className="btn btn-primary" onClick={() => this.recieveOrder(i["orderid"], i["medicienid"])}>Recieve Order</button>
                                                                 : <span></span>)
 
                                                     }
+                                                    <button className="btn btn-primary" onClick={() => this.recieveOrder(i["orderid"], i["medicienid"])}>Recieve Order</button>
                                                 </td>
                                             </tr>
                                         })}
